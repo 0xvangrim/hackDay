@@ -1,6 +1,7 @@
 <script>
 import NewsCard from './NewsCard.svelte'
 export let cards;
+
 </script>
 
 <style>
@@ -12,7 +13,7 @@ export let cards;
 
 <div class="card-container">
 {#each cards as card}
-  <NewsCard title={card.title} content={card.content} url={card.url} image={card.urlToImage} date={card.publishedAt}/>
+  <NewsCard title={card.title} description={card.description} url={card.url} image={card.urlToImage} date={card.publishedAt} source={card.source.name}/>
 {/each}
 </div>
 

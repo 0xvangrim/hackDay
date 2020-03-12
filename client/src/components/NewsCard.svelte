@@ -1,70 +1,97 @@
 <script>
-export let title;
-export let content;
-export let url;
-export let image;
-export let date;
+  export let title;
+  export let description;
+  export let url;
+  export let image;
+  export let date;
+  export let source;
+
 </script>
 
 <style>
-* {
-  margin:0;
-  padding:0;
-}
-.card-container {
-  display: flex;
-  flex-direction: row;
-  width: auto;
-  height: auto;
-  background:white;
-  border-bottom: black 1px solid;
-  margin: 10px;
-}
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  .card-container {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    min-height: 156px;
+    height: auto;
+    background: white;
+    border-bottom: black 1px solid;
+    margin: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
 
-.card-img {
-  max-width: 300px;
-  max-height: 225px;
-}
+  .card-img {
+    max-width: 300px;
+    max-height: 175px;
+  }
 
-.card-date {
-color: lightgrey;
-font-style: italic;
-font-size: 8px;
-margin: 10px;
-}
+  .card-date,
+  .card-source {
+    color: darkgrey;
+    font-style: italic;
+    font-size: 8px;
+  }
 
-.card-content {
-  align-self: flex-end;
-  padding-top: 2%;
-}
+  .card-content {
+    padding-top: 2%;
+  }
 
-.card-title {
-  font-size: 18px;
-  line-height:1.5em;
-}
+  .card-title {
+    font-size: 18px;
+    line-height: 1.5em;
+  }
 
-.text-container {
-  display: flex;
-  flex-direction: column;
-  margin-left: 2%;
-  max-height: 225px;
-}
+  .text-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 2%;
+    max-height: 225px;
+  }
 
-.img-container {
-  justify-content: left;
-}
+  .img-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 300px;
+  }
+
+  .content-link {
+    color:black;
+  }
+
 </style>
 
-
 <div class="card-container">
-<div class="img-container">
-<img class="card-img" src={image} alt="" />
-  <p class="card-date">{date}</p>
-</div>
-<div class="text-container">
-  <h1 class="card-title"><a  href={url}>{title}</a></h1>
-  {#if content === null}
-  <p class="card-content">{content}</p>
-  {/if}
+  <div class="img-container">
+    {#if image === null || image ===''}
+      <img
+        class="card-img"
+        src="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
+        alt="" />
+    {:else}
+      <img class="card-img" src={image} alt="" />
+    {/if}
+    <p class="card-source">Source: {source}</p>
+  </div>
+  <div class="text-container">
+    <h1 class="card-title">
+      <a href={url} target="_blank">{title}</a>
+    </h1>
+    <p class="card-date">{date.slice(0, -10)}</p>
+    {#if description === null}
+      <p>No content available</p>
+    {:else}
+      <p class="card-content">
+        <a class="content-link" href={url}>
+          {@html description}
+        </a>
+      </p>
+    {/if}
   </div>
 </div>
