@@ -4,7 +4,8 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "start": "sirv public"
+    "start": "sirv public",
+    "nodemon": "nodemon server.js"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^11.0.0",
@@ -16,6 +17,8 @@
     "svelte": "^3.0.0"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "sirv-cli": "^0.4.4"
   }
 }
