@@ -8,21 +8,26 @@
   let cards;
   let userInput = "";
   let showEmptyError = false;
-  let language = "";
+  let language = "se";
   let cardsEmpty = false;
+  let fromDate;
+  let toDate;
 
   const fetchData = async () => {
-    const getData = await fetch(`http://localhost:8080/search`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        query: userInput,
-        language: language.toString()
-      })
-    });
+      const getData = await fetch(`http://localhost:8080/search`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          query: userInput,
+          language: language.toString(),
+          fromDate: fromDate,
+          toDate: toDate
+        })
+      });
+
     const result = await getData.json();
     cardExist(result);
   };
@@ -32,7 +37,7 @@
       cardsEmpty = true;
     } else {
       cardsEmpty = false;
-        cards = result.articles;
+      cards = result.articles;
     }
   };
 
@@ -46,6 +51,7 @@
       userInput = "";
     }
   };
+
 </script>
 
 <style>
@@ -56,32 +62,44 @@
   }
   .query-form {
     display: flex;
-    justify-content: center;
   }
   .query-field,
-  .btn-search,
-  .language-drop {
-    margin-right: 10px;
+  .btn-headline,
+  .language-drop,
+  .btn-all {
+    margin-right: 8px;
     margin-bottom: 30px;
   }
-  .query-field {
-    align-self: center;
+
+  .query-date-container {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    margin-right: 8px;
+  }
+
+  .query-date-time {
+    font-size: 8px;
+    height: 2em;
   }
 
   .empty-search,
   .empty-input {
     text-align: center;
   }
+  .btn-headline {
+    background: green;
+    border-radius: 8px;
+  }
+
+  .btn-all {
+    background-color: lightgrey;
+    border-radius: 8px;
+  }
 </style>
 
 <div class="search-form">
   <form on:submit={onSubmit} id="query-form" class="query-form">
-    <input
-      bind:value={userInput}
-      type="text"
-      placeholder="search here"
-      id="title"
-      class="query-field" />
     <select class="language-drop" id="language" bind:value={language}>
       <option value="se">Swedish</option>
       <option value="en">English</option>
@@ -89,7 +107,19 @@
       <option value="fr">French</option>
       <option value="jp">Japanese</option>
     </select>
-    <input type="submit" class="btn-search" value="Search News" />
+    <input
+      bind:value={userInput}
+      type="text"
+      placeholder="search here"
+      id="title"
+      class="query-field" />
+    <div class="query-date-container">
+      <input class="query-date-time" type="date" bind:value={fromDate} />
+      <input class="query-date-time" type="date" bind:value={toDate} />
+    </div>
+    <input type="submit" class="btn-headline" value="Search Headlines" />
+    <input type="submit" class="btn-all" value="Search All" />
+
   </form>
 </div>
 {#if showEmptyError}

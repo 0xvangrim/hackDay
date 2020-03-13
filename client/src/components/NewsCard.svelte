@@ -83,7 +83,7 @@
     <h1 class="card-title">
       <a href={url} target="_blank">{title}</a>
     </h1>
-    <p class="card-date">{date.slice(0, -10)}</p>
+    <p class="card-date">{date.match(/[0-9]{4}-[0-9]{2}-[0-9]{2}/)}</p>
     {#if description === null}
       <p>No content available</p>
     {:else}

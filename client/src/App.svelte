@@ -7,16 +7,17 @@ import QueryCard from './components/QueryCard.svelte'
 <style>
 @font-face {
   font-family: 'Cloister Black';
-  src: local('Cloisterblack')
+  src: url("//db.onlinewebfonts.com/t/3415446527a8aa3e49199af301e31a99.ttf") format('truetype');
 }
 .headline {
   font-family: 'Cloister Black';
   text-align: center;
+  font-size: 60px;
 }
 </style>
 
 <main>
-<h1 class="headline">Latest News App</h1>
+<h1 class="headline"> News App</h1>
 <QueryCard />
 </main>
 
