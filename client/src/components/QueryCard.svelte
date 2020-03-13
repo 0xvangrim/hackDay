@@ -12,8 +12,12 @@
   let cardsEmpty = false;
   let fromDate;
   let toDate;
+  let searchHeadLines = false;
+  let searchAll = false;
 
   const fetchData = async () => {
+    if (searchHeadLines) {
+      searchHeadLines = false;
       const getData = await fetch(`http://localhost:8080/search`, {
         method: "POST",
         headers: {
@@ -27,9 +31,27 @@
           toDate: toDate
         })
       });
+      const result = await getData.json();
+      cardExist(result);
 
-    const result = await getData.json();
-    cardExist(result);
+    } else {
+      const getData = await fetch(`http://localhost:8080/search-all`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          query: userInput,
+          language: language.toString(),
+          fromDate: fromDate,
+          toDate: toDate
+        })
+      });
+
+      const result = await getData.json();
+      cardExist(result);
+    }
   };
 
   const cardExist = result => {
@@ -51,7 +73,6 @@
       userInput = "";
     }
   };
-
 </script>
 
 <style>
@@ -62,6 +83,7 @@
   }
   .query-form {
     display: flex;
+    margin-left: 10rem;
   }
   .query-field,
   .btn-headline,
@@ -105,6 +127,7 @@
       <option value="en">English</option>
       <option value="es">Spanish</option>
       <option value="fr">French</option>
+      <option value="it">Italian</option>
       <option value="jp">Japanese</option>
     </select>
     <input
@@ -117,8 +140,15 @@
       <input class="query-date-time" type="date" bind:value={fromDate} />
       <input class="query-date-time" type="date" bind:value={toDate} />
     </div>
-    <input type="submit" class="btn-headline" value="Search Headlines" />
-    <input type="submit" class="btn-all" value="Search All" />
+    <input
+      type="submit"
+      class="btn-headline"
+      value="Search Headlines"
+      button
+      on:click={() => {
+        searchHeadLines = true;
+      }} />
+    <input type="submit" class="btn-all" value="Search all" />
 
   </form>
 </div>
