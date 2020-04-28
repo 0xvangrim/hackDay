@@ -48,7 +48,6 @@
           toDate: toDate
         })
       });
-
       const result = await getData.json();
       cardExist(result);
     }

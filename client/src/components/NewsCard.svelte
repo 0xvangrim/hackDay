@@ -35,7 +35,7 @@
   .card-source {
     color: darkgrey;
     font-style: italic;
-    font-size: 8px;
+    font-size: 10px;
   }
 
   .card-content {
