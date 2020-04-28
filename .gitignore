@@ -1,6 +1,5 @@
 /client/node_modules/
 /client/public/build/
 /server/node_modules/
-/demo
 .env
 .DS_Store
